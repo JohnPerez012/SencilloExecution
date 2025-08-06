@@ -26,3 +26,21 @@ Because these are true GPIO (General Purpose Input/Output) pins with:
 -> Capable of OUTPUT mode
 -> Can drive current enough for relay modules with opto-isolated inputs (often needs <10mA)
 */
+
+
+/**
+////////////////////////////////////  W/OUT LOOP CODE//////////////////////////////
+
+#define RELAY_PIN 7  // Digital pin connected to relay IN
+
+void setup() {
+  pinMode(RELAY_PIN, OUTPUT);
+  digitalWrite(RELAY_PIN, LOW);  // Turn ON relay (active LOW)
+}
+
+void loop() {
+  // Do nothing in loop
+}
+*/
+
+
