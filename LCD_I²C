@@ -1,0 +1,81 @@
+
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+// Set the LCD address to 0x27 for a 16 chars and 2 line display
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+String message = "      Hello World";  // Spaces help scroll smoothly
+int scrollPosition = 0;
+
+
+// SDA TO A4
+// SCL TP A5
+// VCC TO 5V
+// GND TO GND
+void setup() {
+  lcd.init();
+  lcd.backlight();
+}
+
+void loop() {
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print(message.substring(scrollPosition));  // Show a part of the message
+
+  scrollPosition++;
+  if (scrollPosition > message.length()) {
+    scrollPosition = 0;  // Reset to the beginning
+  }
+
+  delay(550);  
+
+
+/**
+
+❓ Why Only A4 and A5 for I²C?
+The ATmega328P (brain of the Uno) has dedicated I²C pins:
+PC4 → A4 (SDA)
+PC5 → A5 (SCL)
+These pins are hard-wired to the I²C hardware module inside the microcontroller.
+
+
+Using other pins for I²C requires software emulation (known as Software I²C).
+🧠 How I²C Works on Arduino Uno
+I²C needs two lines:
+SDA (Data)
+SCL (Clock)
+The hardware I²C peripheral on ATmega328P can only drive these two lines on A4/A5. That's why the Wire library uses only A4/A5 on Uno.
+
+*/
+
+
+
+
+/**
+///////////////////////////////////  W/OUT LOOP CODE/////////////////////////////
+
+
+
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+
+LiquidCrystal_I2C lcd(0x27, 16, 2); // Try 0x3F if 0x27 doesn't work
+
+
+
+
+void setup() {
+  lcd.init();            // Initialize the LCD
+  lcd.backlight();       // Turn on the backlight
+  lcd.setCursor(0, 0);   // First column, first row
+  lcd.print("Hello, World!");
+  lcd.setCursor(0, 1);   // First column, second row
+  lcd.print("I2C LCD Ready!");
+}
+
+void loop() {
+  // Nothing needed here
+}
+*/
